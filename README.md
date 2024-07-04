@@ -1,3 +1,32 @@
+# TELAS
+
+## Autenticação
+- [x] Login
+- [x] Cadastro
+
+Integrar com VIACEP
+## Cidade
+- [x] Nome da cidade
+- [x] Estado
+- [x] Data de fundação
+
+## Bairro
+- [x] Nome do bairro
+- [x] Associação a uma cidade
+
+## Rua
+- [x] Nome da Rua
+- [x] Associação a um bairro
+
+
+## Relatório/index
+- [ ] Exibir cidades
+- [ ] Dentro de cidades -> Bairros -> Ruas
+- [ ] Função filtrar por cidade, bairro, rua, data de fundação(Periodo inicial e final)
+- [ ] Editar e Remover (cidade, bairro, rua)
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -34,3 +63,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
