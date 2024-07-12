@@ -12,36 +12,41 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
 import { api } from '@/lib/api'
-
-export type TStreet = {
-  id: string
-  name: string
-  neighborhood: string
-}
+import { TStreetDTO } from '@/lib/streetDTO'
+import Link from 'next/link'
 
 async function handleDelete(id: string) {
   try {
     await api.delete(`/street/${id}`)
+    location.reload()
   } catch (error) {
     console.log(error)
   }
 }
 
-export const columns: ColumnDef<TStreet>[] = [
+export const columns: ColumnDef<TStreetDTO>[] = [
   {
     accessorKey: 'id',
-    header: () => <div className="text-left w-10">Identificador</div>,
+    header: () => <div className="text-left">Identificador</div>,
     cell: ({ row }) => {
       return <div className="text-left w-10">{row.original.id}</div>
     },
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'street',
     header: 'Rua',
   },
   {
     accessorKey: 'neighborhood',
     header: 'Bairro',
+  },
+  {
+    accessorKey: 'city',
+    header: 'Cidade',
+  },
+  {
+    accessorKey: 'uf',
+    header: 'Estado',
   },
   {
     id: 'actions',
@@ -60,10 +65,14 @@ export const columns: ColumnDef<TStreet>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleDelete(streetId)}>
+              <DropdownMenuItem asChild>
+                <Link href={`/street/${streetId}`}>Editar</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleDelete(streetId.toString())}
+              >
                 Apagar registro
               </DropdownMenuItem>
-              <DropdownMenuItem>Editar</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -63,13 +63,13 @@ export function SearchCEP({ searchCEP }: SearchCEPProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-2/3 space-y-6 flex items-end gap-4"
+        className="w-full space-y-6 flex items-end gap-4"
       >
         <FormField
           control={form.control}
           name="cep"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>CEP:</FormLabel>
               <FormControl>
                 <Input placeholder="00000-000" {...field} />
@@ -78,7 +78,7 @@ export function SearchCEP({ searchCEP }: SearchCEPProps) {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Pesquisar</Button>
       </form>
     </Form>
   )

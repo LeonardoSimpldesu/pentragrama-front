@@ -46,30 +46,10 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   })
-
   return (
     <div className=" w-full">
-      {pageOf === 'city' ? (
-        <div className="flex items-center py-4 gap-2">
-          <Input
-            placeholder="Filtre por cidade..."
-            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('name')?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <Input
-            placeholder="Filtre por estado..."
-            value={(table.getColumn('uf')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('uf')?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
-      ) : pageOf === 'neighborhood' ? (
-        <div className="flex items-center py-4 gap-2">
+      <div className="flex items-center py-4 gap-2">
+        {pageOf === 'neighborhood' ? (
           <Input
             placeholder="Filtre por bairro..."
             value={
@@ -83,44 +63,55 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
-          <Input
-            placeholder="Filtre por cidade..."
-            value={(table.getColumn('city')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('city')?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
-      ) : pageOf === 'street' ? (
-        <div className="flex items-center py-4 gap-2">
-          <Input
-            placeholder="Filtre por rua..."
-            value={
-              (table.getColumn('street')?.getFilterValue() as string) ?? ''
-            }
-            onChange={(event) =>
-              table.getColumn('street')?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <Input
-            placeholder="Filtre por bairro..."
-            value={
-              (table.getColumn('neighborhood')?.getFilterValue() as string) ??
-              ''
-            }
-            onChange={(event) =>
-              table
-                .getColumn('neighborhood')
-                ?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
-      ) : (
-        ''
-      )}
+        ) : (
+          ''
+        )}
+        {pageOf === 'street' ? (
+          <>
+            <Input
+              placeholder="Filtre por rua..."
+              value={
+                (table.getColumn('street')?.getFilterValue() as string) ?? ''
+              }
+              onChange={(event) =>
+                table.getColumn('street')?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+            <Input
+              placeholder="Filtre por bairro..."
+              value={
+                (table.getColumn('neighborhood')?.getFilterValue() as string) ??
+                ''
+              }
+              onChange={(event) =>
+                table
+                  .getColumn('neighborhood')
+                  ?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+          </>
+        ) : (
+          ''
+        )}
+        <Input
+          placeholder="Filtre por cidade..."
+          value={(table.getColumn('city')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('city')?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <Input
+          placeholder="Filtre por estado..."
+          value={(table.getColumn('uf')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('uf')?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
 
       <div className="rounded-md border w-full">
         <Table>

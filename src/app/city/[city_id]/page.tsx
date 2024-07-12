@@ -25,7 +25,8 @@ import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import { SearchCEP, ViaCepResponse } from '@/components/features/searchCEP'
 import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 const FormSchema = z.object({
   city: z.string().min(2, {
@@ -39,6 +40,9 @@ const FormSchema = z.object({
 
 export default function CityForm() {
   const route = useRouter()
+  const params = useParams<{ city_id: string }>()
+  const cityId = params.city_id
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,9 +52,24 @@ export default function CityForm() {
     },
   })
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/city/${cityId}`)
+        const { name, foundedIn, uf } = response.data
+        form.setValue('city', name)
+        form.setValue('uf', uf)
+        form.setValue('foundedIn', new Date(foundedIn))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }, [])
+
   async function onSubmit({ city, foundedIn, uf }: z.infer<typeof FormSchema>) {
     try {
-      await api.post('/city', { name: city, foundedIn, uf })
+      await api.put(`/city/${cityId}`, { name: city, foundedIn, uf })
       route.push('/city')
     } catch (error) {
       console.log(error)
@@ -137,10 +156,10 @@ export default function CityForm() {
                         captionLayout="dropdown-buttons"
                         selected={field.value}
                         onSelect={field.onChange}
-                        fromYear={1500}
+                        fromYear={1960}
                         toYear={2030}
                         disabled={(date) =>
-                          date > new Date() || date < new Date('1500-01-01')
+                          date > new Date() || date < new Date('1000-01-01')
                         }
                       />
                     </PopoverContent>
@@ -149,7 +168,7 @@ export default function CityForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit">Atualizar</Button>
           </form>
         </Form>
       </div>

@@ -15,9 +15,9 @@ export function Header({ buttonTitle, title }: Header) {
 
   return (
     <div className="w-full">
-      <div className="w-full flex gap-4 items-center justify-between">
+      <div className="w-full flex flex-col sm:flex-row gap-4 items-center justify-between">
         <h1 className="text-2xl font-bold">{title}</h1>
-        <Link href={`${pathname}/create`}>
+        <Link href={`${pathname}/register`}>
           <Button className="gap-2">
             <Plus size={18} /> {buttonTitle}
           </Button>

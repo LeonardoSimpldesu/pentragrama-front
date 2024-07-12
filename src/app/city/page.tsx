@@ -6,21 +6,27 @@ import { useEffect, useState } from 'react'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import Navigation from '@/components/features/navigation'
+import { cityDTO, TCityDTO } from '@/lib/cityDTO'
 
 export default function City() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<TCityDTO[]>([])
   const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get('/city')
-        setData(response.data)
+        if (response.status === 401) {
+          router.push('/')
+        }
+        const cities = cityDTO(response.data.reverse())
+        setData(cities)
       } catch (error) {
-        router.push('/')
+        console.log(error)
       }
     }
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>

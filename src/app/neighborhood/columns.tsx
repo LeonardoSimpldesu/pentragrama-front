@@ -12,36 +12,37 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
 import { api } from '@/lib/api'
-
-export type TNeighborhood = {
-  id: string
-  name: string
-  city: string
-}
+import { TNeighborhoodDTO } from '@/lib/neighborhoodDTO'
+import Link from 'next/link'
 
 async function handleDelete(id: string) {
   try {
     await api.delete(`/neighborhood/${id}`)
+    location.reload()
   } catch (error) {
     console.log(error)
   }
 }
 
-export const columns: ColumnDef<TNeighborhood>[] = [
+export const columns: ColumnDef<TNeighborhoodDTO>[] = [
   {
     accessorKey: 'id',
-    header: () => <div className="text-left w-10">Identificador</div>,
+    header: () => <div className="text-left">Identificador</div>,
     cell: ({ row }) => {
       return <div className="text-left w-10">{row.original.id}</div>
     },
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'neighborhood',
     header: 'Bairro',
   },
   {
     accessorKey: 'city',
     header: 'Cidade',
+  },
+  {
+    accessorKey: 'uf',
+    header: 'Estado',
   },
   {
     id: 'actions',
@@ -59,10 +60,13 @@ export const columns: ColumnDef<TNeighborhood>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>Ver Ruas</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Editar</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDelete(neighborhoodId)}>
+              <DropdownMenuItem asChild>
+                <Link href={`/neighborhood/${neighborhoodId}`}>Editar</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleDelete(neighborhoodId.toString())}
+              >
                 Apagar registro
               </DropdownMenuItem>
             </DropdownMenuContent>

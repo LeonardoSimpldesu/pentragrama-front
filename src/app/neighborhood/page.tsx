@@ -4,24 +4,30 @@ import { DataTable } from '@/components/ui/dataTable'
 import { columns } from './columns'
 import { Header } from '@/components/features/header'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import Navigation from '@/components/features/navigation'
+import { neighborhoodDTO, TNeighborhoodDTO } from '../../lib/neighborhoodDTO'
+import { useRouter } from 'next/navigation'
 
 export default function Neighborhood() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<TNeighborhoodDTO[]>([])
   const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get('/neighborhood')
-        setData(response.data)
+        if (response.status === 401) {
+          router.push('/')
+        }
+        const neighborhoods = neighborhoodDTO(response.data.reverse())
+        setData(neighborhoods)
       } catch (error) {
-        router.push('/')
+        console.log(error)
       }
     }
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
